@@ -1,0 +1,51 @@
+#!/bin/bash
+
+function flash_context () {
+   flash_context_git && echo "git"
+}
+
+function flash_context_git () {
+   git branch &>/dev/null
+}
+
+
+function flash_find_git_opts () {
+   echo -name '.git' -prune -or 
+   echo -name 'target' -prune -or
+   echo -name '*.class' -prune -or
+}
+
+function flash_find_context_opts () {
+   case $(flash_context) in
+      git) flash_find_git_opts;;
+   esac
+}
+
+
+function flash_grep_git_opts () {
+   echo --exclude-dir=\.git
+   echo --exclude-dir=target
+   echo --exclude-dir=log
+   echo --exclude=\*\.jar
+   echo --exclude=\*\.class
+}
+
+function flash_grep_context_opts () {
+   case $(flash_context) in
+      git) flash_grep_git_opts;;
+   esac
+}
+
+
+function flash_find () {
+   (( $# != 1 )) && return 1
+
+   find . $(flash_find_context_opts) -iname '*'"$(basename $1)"'*' -print \
+      | grep --color=always -i "$1"
+}
+
+function flash_grep () {
+   (( $# != 1 && $# != 2 )) && return 1
+
+   grep -rin $(flash_grep_context_opts) "$1" "${2:-.}" | cut -c -$(tput cols) | endcolor
+}
