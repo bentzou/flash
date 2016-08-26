@@ -47,5 +47,5 @@ function flash_find () {
 function flash_grep () {
    (( $# != 1 && $# != 2 )) && return 1
 
-   grep -rin $(flash_grep_context_opts) "$1" "${2:-.}" | cut -c -$(tput cols) | endcolor
+   grep --color=always -rin $(flash_grep_context_opts) "$1" "${2:-.}" | cut -c -$(tput cols) | endcolor
 }
