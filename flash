@@ -72,8 +72,8 @@ function flash_grep () {
    (( $# != 1 && $# != 2 )) && return 1
 
    if tty -s; then
-      grep --color=always -rin $(flash_grep_context_opts) "$1" "${2:-.}" | cut -c -$(tput cols) | endcolor
+      grep --color=always -rinI $(flash_grep_context_opts) "$1" "${2:-.}" | cut -c -$(tput cols) | endcolor
    else
-      grep --color=always -i $(flash_grep_context_opts) "$1" | cut -c -$(tput cols) | endcolor
+      grep --color=always -iI $(flash_grep_context_opts) "$1" | cut -c -$(tput cols) | endcolor
    fi
 }
