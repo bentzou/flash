@@ -11,8 +11,11 @@ function flash_context_git () {
 
 function flash_find_git_opts () {
    echo -name '.git' -prune -or 
+   echo -name 'venv' -prune -or
    echo -name 'target' -prune -or
    echo -name '*.class' -prune -or
+   echo -name 'node_modules' -prune -or
+   echo -name 'bower_components' -prune -or
 }
 
 function flash_find_context_opts () {
@@ -24,6 +27,13 @@ function flash_find_context_opts () {
 
 function flash_grep_git_opts () {
    echo --exclude-dir=\.git
+   echo --exclude-dir=node_modules
+   echo --exclude-dir=bower_components
+   echo --exclude-dir=\.tox
+   echo --exclude-dir=\.tmp
+   echo --exclude-dir=env
+   echo --exclude-dir=dist
+   echo --exclude-dir=venv
    echo --exclude-dir=target
    echo --exclude-dir=log
    echo --exclude=\*\.jar
