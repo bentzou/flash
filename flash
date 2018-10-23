@@ -44,6 +44,20 @@ function flash_find () {
       | grep --color=always -i "$1"
 }
 
+function flash_find_file () {
+   (( $# != 1 )) && return 1
+
+   find . $(flash_find_context_opts) -type f -iname '*'"$(basename $1)"'*' -print \
+      | grep --color=always -i "$1"
+}
+
+function flash_find_directory () {
+   (( $# != 1 )) && return 1
+
+   find . $(flash_find_context_opts) -type d -iname '*'"$(basename $1)"'*' -print \
+      | grep --color=always -i "$1"
+}
+
 function flash_grep () {
    (( $# != 1 && $# != 2 )) && return 1
 
