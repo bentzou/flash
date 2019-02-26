@@ -62,9 +62,12 @@ function flash_find_file () {
 }
 
 function flash_find_directory () {
-   (( $# != 1 )) && return 1
+   (( $# != 1 && $# != 2 )) && return 1
 
-   find . $(flash_find_context_opts) -type d -iname '*'"$(basename $1)"'*' -print \
+   local depth_param="-maxdepth 1"
+   [ "$1" = "-r" ] && depth_param="" && shift
+
+   find . $(flash_find_context_opts) -type d $depth_param -iname '*'"$(basename $1)"'*' -print \
       | grep --color=always -i "$1"
 }
 
