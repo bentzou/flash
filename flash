@@ -67,7 +67,7 @@ function flash_find_directory () {
    local depth_param="-maxdepth 1"
    [ "$1" = "-r" ] && depth_param="" && shift
 
-   find . $(flash_find_context_opts) -type d $depth_param -iname '*'"$(basename $1)"'*' -print \
+   find . $(flash_find_context_opts) $depth_param -type d -iname '*'"$(basename $1)"'*' -print \
       | grep --color=always -i "$1"
 }
 
